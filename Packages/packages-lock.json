@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.peturdarri.generic-event-bus": {
+      "version": "https://github.com/PeturDarri/GenericEventBus.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9a5edf71a29bae0f59c68f04c97061e4a7076201"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 1,

@@ -6,7 +6,7 @@ using UnityEditor.Build.Content;
 using GenericEventBus;
 using Game.Core;
 
-public class InputReader : MonoBehaviour, GameInput.IPlayerActions
+public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
 {
     //public GameEvent playerMoveInputEvent;
     //public GameEvent cameraZoomInputEvent;
@@ -34,13 +34,13 @@ public class InputReader : MonoBehaviour, GameInput.IPlayerActions
     public void OnRightRacketMove(InputAction.CallbackContext context)
     {
         float moveValue = context.ReadValue<float>();
-        inputEventBus.Raise(new RacketMoveInputEvent { direction = moveValue});
+        inputEventBus.Raise(new RightRacketMoveInputEvent { direction = moveValue});
 
     }
     public void OnLeftRacketMove(InputAction.CallbackContext context)
     {
         float moveValue = context.ReadValue<float>();
-        Debug.Log(moveValue);
+        inputEventBus.Raise(new LeftRacketMoveInputEvent { direction = moveValue});
     }
 
     //public void OnMove(InputAction.CallbackContext context)

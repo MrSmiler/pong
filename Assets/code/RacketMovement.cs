@@ -8,7 +8,7 @@ public class RacketMovement : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private float velocity = 100f;
-    private float moveDirection;
+    protected float moveDirection;
 
     void Start()
     {
@@ -22,19 +22,4 @@ public class RacketMovement : MonoBehaviour
         position.y += moveDirection * Time.deltaTime * velocity;
         rigidBody.MovePosition(position);
     }
-
-    public void OnMove(ref RacketMoveInputEvent data)
-    {
-        moveDirection = data.direction;
-    }
-
-    private void OnEnable()
-    {
-        GameEventManager.GetInputEventBus().SubscribeTo<RacketMoveInputEvent>(OnMove); 
-    }
-    private void OnDisable()
-    {
-        GameEventManager.GetInputEventBus().UnsubscribeFrom<RacketMoveInputEvent>(OnMove); 
-    }
-
 }

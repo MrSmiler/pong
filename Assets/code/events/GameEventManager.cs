@@ -9,7 +9,7 @@ namespace Game.Core {
     public class GameEventManager
     {
         private static GameEventManager instance;
-        private GenericEventBus<IGameEvent, GameObject> gameEventBus;
+        private GenericEventBus<IGameEvent> gameEventBus;
         private GenericEventBus<IInputEvent> inputEventBus;
 
         private static GameEventManager Instance()
@@ -17,13 +17,13 @@ namespace Game.Core {
             if (instance == null)
             {
                 instance = new GameEventManager();
-                instance.gameEventBus = new GenericEventBus<IGameEvent, GameObject>();
+                instance.gameEventBus = new GenericEventBus<IGameEvent>();
                 instance.inputEventBus = new GenericEventBus<IInputEvent>();
             }
             return instance;
         }
 
-        public static GenericEventBus<IGameEvent, GameObject> GetGameEventBus()
+        public static GenericEventBus<IGameEvent> GetGameEventBus()
         {
             return Instance().gameEventBus;
         }

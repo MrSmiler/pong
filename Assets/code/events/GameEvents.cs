@@ -4,8 +4,6 @@ using UnityEngine;
 namespace Game.Core { 
     public interface IGameEvent {}
 
-    //public struct ShipBuildModeTriggerdEvent : IGameEvent
-    //{
-    //    public bool enabeld;
-    //}
+    public struct RightGoalTriggerdEvent : IGameEvent {}
+    public struct LeftGoalTriggerdEvent : IGameEvent {}
 }

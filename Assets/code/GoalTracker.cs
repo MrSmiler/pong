@@ -16,16 +16,18 @@ public class GoalTracker : MonoBehaviour
         {
             if (rightGoal) 
             {
-                GameEventManager.GetGameEventBus().Raise(new RightGoalTriggerdEvent { });
+                GameEventManager.GetGameEventBus().Raise(new RightGoalTriggerdEvent {ballGameObject = collision.gameObject});
+                Debug.Log("Right Goal trigger event Raised");
             }
             else
             {
-                GameEventManager.GetGameEventBus().Raise(new LeftGoalTriggerdEvent { });
+                GameEventManager.GetGameEventBus().Raise(new LeftGoalTriggerdEvent {ballGameObject = collision.gameObject});
+                Debug.Log("Right Goal trigger event Raised");
             }
         }
         else
         {
-            throw new Exception("Goal tracker was triggerd with somthing other than bal");
+            throw new Exception("Goal tracker was triggerd with somthing other than ball");
         }
     }
 }

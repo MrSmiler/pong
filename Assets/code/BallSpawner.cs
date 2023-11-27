@@ -1,8 +1,4 @@
 using Game.Core;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -13,18 +9,18 @@ public class BallSpawner : MonoBehaviour
     private void Start()
     {
         ballPrefab = Addressables.LoadAssetAsync<GameObject>("BallPrefab").WaitForCompletion();
-        SpawnBall();    
+        SpawnBall();
     }
 
     private void OnEnable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(RightGoalTriggerd); 
-        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(LeftGoalTriggerd); 
+        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(RightGoalTriggerd);
+        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(LeftGoalTriggerd);
     }
     private void OnDisable()
     {
-        GameEventManager.GetGameEventBus().UnsubscribeFrom<RightGoalTriggerdEvent>(RightGoalTriggerd); 
-        GameEventManager.GetGameEventBus().UnsubscribeFrom<LeftGoalTriggerdEvent>(LeftGoalTriggerd); 
+        GameEventManager.GetGameEventBus().UnsubscribeFrom<RightGoalTriggerdEvent>(RightGoalTriggerd);
+        GameEventManager.GetGameEventBus().UnsubscribeFrom<LeftGoalTriggerdEvent>(LeftGoalTriggerd);
     }
 
     void RightGoalTriggerd(ref RightGoalTriggerdEvent eventData)

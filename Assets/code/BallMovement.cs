@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
     public const int speed = 50;
-    new Rigidbody2D rigidbody;
+    Rigidbody2D rigidbody;
     Vector2 lastVelocity;
     // Start is called before the first frame update
     void Start()
@@ -14,11 +12,11 @@ public class BallMovement : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
 
         UnityEngine.Random.InitState((int)DateTime.UtcNow.Ticks);
-        float x = UnityEngine.Random.Range(0f, 1f);
-        float y = UnityEngine.Random.Range(0f, 1f);
-        Debug.Log("random x: " + x + " y:" + y);
-        float xVelocity = x * speed;
-        float yVelocity = y * speed;
+        int[] unit = { -1, 1 };
+        int i = UnityEngine.Random.Range(0, 2);
+        int j = UnityEngine.Random.Range(0, 2);
+        float xVelocity = unit[i] * speed;
+        float yVelocity = unit[j] * speed;
         rigidbody.AddForce(new Vector2(xVelocity, yVelocity));
     }
 

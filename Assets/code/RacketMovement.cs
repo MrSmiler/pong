@@ -1,6 +1,3 @@
-using Game.Core;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RacketMovement : MonoBehaviour
@@ -18,7 +15,7 @@ public class RacketMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 position = rigidBody.position;     
+        Vector2 position = rigidBody.position;
         position.y += moveDirection * Time.deltaTime * velocity;
         rigidBody.MovePosition(position);
     }

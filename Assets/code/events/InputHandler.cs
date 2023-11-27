@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEngine;
-using UnityEditor.Build.Content;
+﻿using Game.Core;
 using GenericEventBus;
-using Game.Core;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
 {
@@ -17,30 +14,30 @@ public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
 
     void Awake()
     {
-        inputEventBus = GameEventManager.GetInputEventBus(); 
+        inputEventBus = GameEventManager.GetInputEventBus();
     }
 
-	private void OnEnable()
-	{
-		if (gameInput == null)
-		{
-			gameInput = new GameInput();
+    private void OnEnable()
+    {
+        if (gameInput == null)
+        {
+            gameInput = new GameInput();
             gameInput.Player.SetCallbacks(this);
             gameInput.Player.Enable();
-		}
+        }
 
-	}
-    
+    }
+
     public void OnRightRacketMove(InputAction.CallbackContext context)
     {
         float moveValue = context.ReadValue<float>();
-        inputEventBus.Raise(new RightRacketMoveInputEvent { direction = moveValue});
+        inputEventBus.Raise(new RightRacketMoveInputEvent { direction = moveValue });
 
     }
     public void OnLeftRacketMove(InputAction.CallbackContext context)
     {
         float moveValue = context.ReadValue<float>();
-        inputEventBus.Raise(new LeftRacketMoveInputEvent { direction = moveValue});
+        inputEventBus.Raise(new LeftRacketMoveInputEvent { direction = moveValue });
     }
 
     //public void OnMove(InputAction.CallbackContext context)

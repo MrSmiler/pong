@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Game.Core;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class RigthRacketScoreTracker : MonoBehaviour
@@ -11,17 +9,17 @@ public class RigthRacketScoreTracker : MonoBehaviour
 
     private void Start()
     {
-        textLabel = GetComponent<Text>();        
+        textLabel = GetComponent<Text>();
     }
 
     private void OnEnable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(RigthRacketScored); 
+        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(RigthRacketScored);
     }
 
     private void OnDisable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(RigthRacketScored); 
+        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(RigthRacketScored);
     }
 
     void RigthRacketScored(ref LeftGoalTriggerdEvent eventData)

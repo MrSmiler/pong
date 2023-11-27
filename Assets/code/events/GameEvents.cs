@@ -1,15 +1,21 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Core { 
-    public interface IGameEvent {}
+namespace Game.Core
+{
+    public interface IGameEvent { }
 
-    public struct RightGoalTriggerdEvent : IGameEvent 
-    { 
+    public struct RightGoalTriggerdEvent : IGameEvent
+    {
         public GameObject ballGameObject;
     }
     public struct LeftGoalTriggerdEvent : IGameEvent
     {
         public GameObject ballGameObject;
+    }
+    public struct PongStarted : IGameEvent
+    {
+    }
+    public struct PongEnded : IGameEvent
+    {
     }
 }

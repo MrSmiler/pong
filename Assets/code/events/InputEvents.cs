@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
-using System;
-
-
-namespace Game.Core { 
-    public interface IInputEvent {}
+﻿namespace Game.Core
+{
+    public interface IInputEvent { }
 
     public struct RightRacketMoveInputEvent : IInputEvent
     {

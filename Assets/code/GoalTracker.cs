@@ -1,7 +1,5 @@
 using Game.Core;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GoalTracker : MonoBehaviour
@@ -14,14 +12,14 @@ public class GoalTracker : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ball")
         {
-            if (rightGoal) 
+            if (rightGoal)
             {
-                GameEventManager.GetGameEventBus().Raise(new RightGoalTriggerdEvent {ballGameObject = collision.gameObject});
+                GameEventManager.GetGameEventBus().Raise(new RightGoalTriggerdEvent { ballGameObject = collision.gameObject });
                 Debug.Log("Right Goal trigger event Raised");
             }
             else
             {
-                GameEventManager.GetGameEventBus().Raise(new LeftGoalTriggerdEvent {ballGameObject = collision.gameObject});
+                GameEventManager.GetGameEventBus().Raise(new LeftGoalTriggerdEvent { ballGameObject = collision.gameObject });
                 Debug.Log("Right Goal trigger event Raised");
             }
         }

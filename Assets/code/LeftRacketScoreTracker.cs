@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Game.Core;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class LeftRacketScoreTracker : MonoBehaviour
@@ -10,17 +8,17 @@ public class LeftRacketScoreTracker : MonoBehaviour
 
     private void Start()
     {
-        textLabel = GetComponent<Text>();        
+        textLabel = GetComponent<Text>();
     }
 
     private void OnEnable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(LeftRacketScored); 
+        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(LeftRacketScored);
     }
 
     private void OnDisable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(LeftRacketScored); 
+        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(LeftRacketScored);
     }
 
     void LeftRacketScored(ref RightGoalTriggerdEvent eventData)

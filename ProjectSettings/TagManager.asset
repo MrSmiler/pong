@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ball
+  - ScoreLabel
+  - GameStateObjects
+  - Timer
   layers:
   - Default
   - TransparentFX

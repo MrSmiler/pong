@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
-using Game.Core;
+﻿using Game.Core;
 
-public class LeftRacketMovement: RacketMovement
+public class LeftRacketMovement : RacketMovement
 {
     public void OnMove(ref LeftRacketMoveInputEvent data)
     {
@@ -11,11 +9,11 @@ public class LeftRacketMovement: RacketMovement
 
     private void OnEnable()
     {
-        GameEventManager.GetInputEventBus().SubscribeTo<LeftRacketMoveInputEvent>(OnMove); 
+        GameEventManager.GetInputEventBus().SubscribeTo<LeftRacketMoveInputEvent>(OnMove);
     }
     private void OnDisable()
     {
-        GameEventManager.GetInputEventBus().UnsubscribeFrom<LeftRacketMoveInputEvent>(OnMove); 
+        GameEventManager.GetInputEventBus().UnsubscribeFrom<LeftRacketMoveInputEvent>(OnMove);
     }
 
 }

@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
-using GenericEventBus;
-using Unity.VisualScripting;
-using System;
+﻿using GenericEventBus;
 
-namespace Game.Core { 
+namespace Game.Core
+{
 
     public class GameEventManager
     {

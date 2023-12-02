@@ -19,7 +19,7 @@ public class RigthRacketScoreTracker : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<LeftGoalTriggerdEvent>(RigthRacketScored);
+        GameEventManager.GetGameEventBus().UnsubscribeFrom<LeftGoalTriggerdEvent>(RigthRacketScored);
     }
 
     void RigthRacketScored(ref LeftGoalTriggerdEvent eventData)

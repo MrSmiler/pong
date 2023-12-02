@@ -18,7 +18,7 @@ public class LeftRacketScoreTracker : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEventManager.GetGameEventBus().SubscribeTo<RightGoalTriggerdEvent>(LeftRacketScored);
+        GameEventManager.GetGameEventBus().UnsubscribeFrom<RightGoalTriggerdEvent>(LeftRacketScored);
     }
 
     void LeftRacketScored(ref RightGoalTriggerdEvent eventData)

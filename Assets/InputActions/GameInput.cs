@@ -44,6 +44,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a9114d0e-c85c-4dba-a749-daf71df18f52"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""LeftRacketMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccccfad2-da45-471c-96f5-29417e4f347e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -699,6 +719,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_RightRacketMove = m_Player.FindAction("RightRacketMove", throwIfNotFound: true);
         m_Player_LeftRacketMove = m_Player.FindAction("LeftRacketMove", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -774,12 +795,14 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_RightRacketMove;
     private readonly InputAction m_Player_LeftRacketMove;
+    private readonly InputAction m_Player_PauseMenu;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
         public PlayerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @RightRacketMove => m_Wrapper.m_Player_RightRacketMove;
         public InputAction @LeftRacketMove => m_Wrapper.m_Player_LeftRacketMove;
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -795,6 +818,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @LeftRacketMove.started += instance.OnLeftRacketMove;
             @LeftRacketMove.performed += instance.OnLeftRacketMove;
             @LeftRacketMove.canceled += instance.OnLeftRacketMove;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -805,6 +831,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @LeftRacketMove.started -= instance.OnLeftRacketMove;
             @LeftRacketMove.performed -= instance.OnLeftRacketMove;
             @LeftRacketMove.canceled -= instance.OnLeftRacketMove;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -989,6 +1018,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     {
         void OnRightRacketMove(InputAction.CallbackContext context);
         void OnLeftRacketMove(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

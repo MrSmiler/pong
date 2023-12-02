@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace Game.Core
 {
     public class GameManager : MonoBehaviour
     {
         public static GameManager instance;
-
+        GameObject[] labels;
 
         GameState currentState;
 
@@ -15,12 +16,12 @@ namespace Game.Core
             if (instance == null) 
             {
                 instance = this;
-                updateState(GameState.MainMenu);
             }
         }
 
         void Start()
         {
+            updateState(GameState.GameTimer);
         }
 
         public void updateState(GameState state)
@@ -41,6 +42,7 @@ namespace Game.Core
                 case GameState.GameOver:
                     break;
                 case GameState.GamePause:
+                    HandleGamePause();
                     break;
             }
         }
@@ -62,24 +64,37 @@ namespace Game.Core
                 Debug.Log("in load scene");
                 SceneManager.LoadScene("Main");
             }
-            var labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
-            foreach (var label in labels) 
+            labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
+            foreach (var label in labels)
             {
-                Debug.Log(label);
+                Debug.Log("label: " + label);
                 label.SetActive(false);
             }
             GameObject.FindGameObjectWithTag("GameStateObjects").GetComponent<BallSpawner>().enabled = false;
+            GameObject.FindGameObjectWithTag("Timer").SetActive(true);
         }
 
         void HandleGameStartState()
         {
-            var labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
-            foreach (var label in labels) 
+            // labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
+            foreach (var label in labels)
             {
+                Debug.Log("label: " + label);
                 label.SetActive(true);
             }
-            GameObject.FindGameObjectWithTag("GameStateObjects").SetActive(true);
             GameObject.FindGameObjectWithTag("Timer").SetActive(false);
+            GameObject.FindGameObjectWithTag("GameStateObjects").GetComponent<BallSpawner>().enabled = true;
+        }
+        void HandleGamePause()
+        {
+            GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
+            if (pauseMenu == null)
+            {
+                throw new Exception("Pause Menu game object was not found");
+            }
+
+            pauseMenu.GetComponent<Canvas>().enabled = true;
+            Time.timeScale = 0;
         }
     }
 

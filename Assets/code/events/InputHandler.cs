@@ -11,10 +11,12 @@ public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
 
     private GameInput gameInput;
     private GenericEventBus<IInputEvent> inputEventBus;
+    private GameManager gameManager;
 
     void Awake()
     {
         inputEventBus = GameEventManager.GetInputEventBus();
+        gameManager = GameManager.instance;
     }
 
     private void OnEnable()
@@ -38,6 +40,13 @@ public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
     {
         float moveValue = context.ReadValue<float>();
         inputEventBus.Raise(new LeftRacketMoveInputEvent { direction = moveValue });
+    }
+    public void OnPauseMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            gameManager.updateState(GameState.GamePause);
+        }
     }
 
     //public void OnMove(InputAction.CallbackContext context)

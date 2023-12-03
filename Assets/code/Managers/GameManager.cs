@@ -7,9 +7,11 @@ namespace Game.Core
     public class GameManager : MonoBehaviour
     {
         public static GameManager instance;
-        GameObject[] labels;
+        private GameObject[] labels;
 
-        GameState currentState;
+        private GameState currentState;
+
+        public GameState CurrentState { get { return currentState; } }
 
         void Awake()
         {
@@ -43,6 +45,9 @@ namespace Game.Core
                     break;
                 case GameState.GamePause:
                     HandleGamePause();
+                    break;
+                case GameState.GameUnPause:
+                    HandleGameUnPause();
                     break;
             }
         }
@@ -96,6 +101,17 @@ namespace Game.Core
             pauseMenu.GetComponent<Canvas>().enabled = true;
             Time.timeScale = 0;
         }
+        void HandleGameUnPause()
+        {
+            GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
+            if (pauseMenu == null)
+            {
+                throw new Exception("Pause Menu game object was not found");
+            }
+
+            pauseMenu.GetComponent<Canvas>().enabled = false;
+            Time.timeScale = 1;
+        }
     }
 
     public enum GameState
@@ -104,6 +120,7 @@ namespace Game.Core
         GameTimer,
         GameStart,
         GameOver,
-        GamePause
+        GamePause,
+        GameUnPause
     }
 }

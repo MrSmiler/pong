@@ -45,7 +45,16 @@ public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
     {
         if (context.performed)
         {
-            gameManager.updateState(GameState.GamePause);
+            if (gameManager.CurrentState == GameState.GameUnPause ||
+                gameManager.CurrentState == GameState.GameStart ||
+                gameManager.CurrentState == GameState.GameTimer)
+            {
+                gameManager.updateState(GameState.GamePause);
+            }
+            else
+            {
+                gameManager.updateState(GameState.GameUnPause);
+            }
         }
     }
 

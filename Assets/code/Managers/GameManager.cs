@@ -10,8 +10,13 @@ namespace Game.Core
         private GameObject[] labels;
 
         private GameState currentState;
+        private PlayMode currentPlayMode;
 
         public GameState CurrentState { get { return currentState; } }
+        public PlayMode CurrentPlayMode { 
+            get { return currentPlayMode; } 
+            set { currentPlayMode = value; }
+        }
 
         void Awake()
         {
@@ -19,6 +24,7 @@ namespace Game.Core
             {
                 instance = this;
             }
+            currentPlayMode = PlayMode.Single;
         }
 
         void Start()
@@ -28,6 +34,11 @@ namespace Game.Core
 
         public void updateState(GameState state)
         {
+            if (currentState == GameState.GamePause && state == GameState.GameUnPause) 
+            {
+                UnPauseGame();
+            }
+
             currentState = state;
 
             switch (state)
@@ -92,6 +103,15 @@ namespace Game.Core
         }
         void HandleGamePause()
         {
+            PauseGame();            
+        }
+        void HandleGameUnPause()
+        {
+            UnPauseGame(); 
+        }
+
+        void PauseGame()
+        {
             GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
             if (pauseMenu == null)
             {
@@ -101,7 +121,8 @@ namespace Game.Core
             pauseMenu.GetComponent<Canvas>().enabled = true;
             Time.timeScale = 0;
         }
-        void HandleGameUnPause()
+
+        void UnPauseGame()
         {
             GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
             if (pauseMenu == null)
@@ -114,6 +135,8 @@ namespace Game.Core
         }
     }
 
+    
+
     public enum GameState
     {
         MainMenu,
@@ -122,5 +145,12 @@ namespace Game.Core
         GameOver,
         GamePause,
         GameUnPause
+    }
+
+    public enum PlayMode
+    {
+        Single,
+        TwoSameKeyboard,
+        TwoNetwork
     }
 }

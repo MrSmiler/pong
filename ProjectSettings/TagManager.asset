@@ -8,6 +8,7 @@ TagManager:
   - ScoreLabel
   - GameStateObjects
   - Timer
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

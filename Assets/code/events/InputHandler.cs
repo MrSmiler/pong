@@ -8,24 +8,23 @@ public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
     //public GameEvent playerMoveInputEvent;
     //public GameEvent cameraZoomInputEvent;
 
+    private GameInput _gameInput;
+    private GenericEventBus<IInputEvent> _inputEventBus;
+    private GameManager _gameManager;
 
-    private GameInput gameInput;
-    private GenericEventBus<IInputEvent> inputEventBus;
-    private GameManager gameManager;
-
-    void Awake()
+    private void Awake()
     {
-        inputEventBus = GameEventManager.GetInputEventBus();
-        gameManager = GameManager.instance;
+        _inputEventBus = GameEventManager.GetInputEventBus();
+        _gameManager = GameManager.instance;
     }
 
     private void OnEnable()
     {
-        if (gameInput == null)
+        if (_gameInput == null)
         {
-            gameInput = new GameInput();
-            gameInput.Player.SetCallbacks(this);
-            gameInput.Player.Enable();
+            _gameInput = new GameInput();
+            _gameInput.Player.SetCallbacks(this);
+            _gameInput.Player.Enable();
         }
 
     }
@@ -33,27 +32,25 @@ public class InputHandler : MonoBehaviour, GameInput.IPlayerActions
     public void OnRightRacketMove(InputAction.CallbackContext context)
     {
         float moveValue = context.ReadValue<float>();
-        inputEventBus.Raise(new RightRacketMoveInputEvent { direction = moveValue });
+        _inputEventBus.Raise(new RightRacketMoveInputEvent { direction = moveValue });
 
     }
     public void OnLeftRacketMove(InputAction.CallbackContext context)
     {
         float moveValue = context.ReadValue<float>();
-        inputEventBus.Raise(new LeftRacketMoveInputEvent { direction = moveValue });
+        _inputEventBus.Raise(new LeftRacketMoveInputEvent { direction = moveValue });
     }
-    public void OnPauseMenu(InputAction.CallbackContext context)
+    public void OnPauseMenuOpenClose(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            if (gameManager.CurrentState == GameState.GameUnPause ||
-                gameManager.CurrentState == GameState.GameStart ||
-                gameManager.CurrentState == GameState.GameTimer)
+            if (_gameManager.CurrentState is EGameState.GameUnPause or EGameState.GameStart or EGameState.GameTimer)
             {
-                gameManager.updateState(GameState.GamePause);
+                _gameManager.UpdateState(EGameState.GamePause);
             }
             else
             {
-                gameManager.updateState(GameState.GameUnPause);
+                _gameManager.UpdateState(EGameState.GameUnPause);
             }
         }
     }

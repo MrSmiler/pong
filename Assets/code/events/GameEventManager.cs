@@ -5,28 +5,28 @@ namespace Game.Core
 
     public class GameEventManager
     {
-        private static GameEventManager instance;
-        private GenericEventBus<IGameEvent> gameEventBus;
-        private GenericEventBus<IInputEvent> inputEventBus;
+        private static GameEventManager _instance;
+        private GenericEventBus<IGameEvent> _gameEventBus;
+        private GenericEventBus<IInputEvent> _inputEventBus;
 
         private static GameEventManager Instance()
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new GameEventManager();
-                instance.gameEventBus = new GenericEventBus<IGameEvent>();
-                instance.inputEventBus = new GenericEventBus<IInputEvent>();
+                _instance = new GameEventManager();
+                _instance._gameEventBus = new GenericEventBus<IGameEvent>();
+                _instance._inputEventBus = new GenericEventBus<IInputEvent>();
             }
-            return instance;
+            return _instance;
         }
 
         public static GenericEventBus<IGameEvent> GetGameEventBus()
         {
-            return Instance().gameEventBus;
+            return Instance()._gameEventBus;
         }
         public static GenericEventBus<IInputEvent> GetInputEventBus()
         {
-            return Instance().inputEventBus;
+            return Instance()._inputEventBus;
         }
     }
 }

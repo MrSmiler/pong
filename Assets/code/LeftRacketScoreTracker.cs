@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class LeftRacketScoreTracker : MonoBehaviour
 {
-    private Text textLabel;
+    private Text _textLabel;
 
     private void Start()
     {
-        textLabel = GetComponent<Text>();
+        _textLabel = GetComponent<Text>();
     }
 
     private void OnEnable()
@@ -21,11 +21,11 @@ public class LeftRacketScoreTracker : MonoBehaviour
         GameEventManager.GetGameEventBus().UnsubscribeFrom<RightGoalTriggerdEvent>(LeftRacketScored);
     }
 
-    void LeftRacketScored(ref RightGoalTriggerdEvent eventData)
+    private void LeftRacketScored(ref RightGoalTriggerdEvent eventData)
     {
-        int currentScore = int.Parse(textLabel.text);
+        int currentScore = int.Parse(_textLabel.text);
         currentScore++;
-        textLabel.text = currentScore.ToString();
+        _textLabel.text = currentScore.ToString();
     }
 }
 

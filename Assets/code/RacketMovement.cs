@@ -3,20 +3,20 @@ using UnityEngine;
 public class RacketMovement : MonoBehaviour
 {
 
-    private Rigidbody2D rigidBody;
-    private float velocity = 100f;
+    private Rigidbody2D _rigidBody;
+    private const float _velocity = 10f;
     protected float moveDirection;
 
-    void Start()
+    private void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        _rigidBody = GetComponent<Rigidbody2D>();
         moveDirection = 0f;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        Vector2 position = rigidBody.position;
-        position.y += moveDirection * Time.deltaTime * velocity;
-        rigidBody.MovePosition(position);
+        var position = _rigidBody.position;
+        position.y += moveDirection * Time.deltaTime * _velocity;
+        _rigidBody.MovePosition(position);
     }
 }

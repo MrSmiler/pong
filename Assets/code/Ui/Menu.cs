@@ -1,6 +1,5 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Game.Core;
+using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class Menu : MonoBehaviour
     public void SinglePlayerClicked()
     {
         // SceneManager.LoadScene("Main");
-        GameManager.instance.updateState(GameState.GameTimer);
+        GameManager.instance.UpdateState(EGameState.GameTimer);
     }
     public void TwoPlayerKeyboardClicked()
     {

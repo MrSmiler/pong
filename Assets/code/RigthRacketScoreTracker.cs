@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class RigthRacketScoreTracker : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Text textLabel;
+    private Text _textLabel;
 
     private void Start()
     {
-        textLabel = GetComponent<Text>();
+        _textLabel = GetComponent<Text>();
     }
 
     private void OnEnable()
@@ -22,10 +22,10 @@ public class RigthRacketScoreTracker : MonoBehaviour
         GameEventManager.GetGameEventBus().UnsubscribeFrom<LeftGoalTriggerdEvent>(RigthRacketScored);
     }
 
-    void RigthRacketScored(ref LeftGoalTriggerdEvent eventData)
+    private void RigthRacketScored(ref LeftGoalTriggerdEvent eventData)
     {
-        int currentScore = int.Parse(textLabel.text);
+        int currentScore = int.Parse(_textLabel.text);
         currentScore++;
-        textLabel.text = currentScore.ToString();
+        _textLabel.text = currentScore.ToString();
     }
 }

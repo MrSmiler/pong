@@ -4,11 +4,11 @@ using UnityEngine.AddressableAssets;
 
 public class BallSpawner : MonoBehaviour
 {
-    private GameObject ballPrefab;
+    private GameObject _ballPrefab;
 
     private void Start()
     {
-        ballPrefab = Addressables.LoadAssetAsync<GameObject>("BallPrefab").WaitForCompletion();
+        _ballPrefab = Addressables.LoadAssetAsync<GameObject>("BallPrefab").WaitForCompletion();
         SpawnBall();
     }
 
@@ -23,20 +23,21 @@ public class BallSpawner : MonoBehaviour
         GameEventManager.GetGameEventBus().UnsubscribeFrom<LeftGoalTriggerdEvent>(LeftGoalTriggerd);
     }
 
-    void RightGoalTriggerd(ref RightGoalTriggerdEvent eventData)
-    {
-        Destroy(eventData.ballGameObject);
-        SpawnBall();
-    }
-    void LeftGoalTriggerd(ref LeftGoalTriggerdEvent eventData)
+    private void RightGoalTriggerd(ref RightGoalTriggerdEvent eventData)
     {
         Destroy(eventData.ballGameObject);
         SpawnBall();
     }
 
-    void SpawnBall()
+    private void LeftGoalTriggerd(ref LeftGoalTriggerdEvent eventData)
     {
-        GameObject ball = Instantiate(ballPrefab, transform);
+        Destroy(eventData.ballGameObject);
+        SpawnBall();
+    }
+
+    private void SpawnBall()
+    {
+        var ball = Instantiate(_ballPrefab, transform);
         if (ball != null)
         {
             Debug.Log("Ball instantiated");

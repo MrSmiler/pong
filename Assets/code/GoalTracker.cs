@@ -1,18 +1,17 @@
+﻿using System;
 using Game.Core;
-using System;
 using UnityEngine;
 
 public class GoalTracker : MonoBehaviour
 {
     [SerializeField]
-    private bool rightGoal;
-
+    private bool _rightGoal;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ball")
+        if (collision.gameObject.CompareTag("Ball"))
         {
-            if (rightGoal)
+            if (_rightGoal)
             {
                 GameEventManager.GetGameEventBus().Raise(new RightGoalTriggerdEvent { ballGameObject = collision.gameObject });
                 Debug.Log("Right Goal trigger event Raised");

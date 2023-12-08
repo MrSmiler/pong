@@ -1,33 +1,28 @@
+﻿using System.Collections;
 using Game.Core;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameStartCountDown : MonoBehaviour
 {
     public int countDown = 3;
-    Text timerText;
+    private Text _timerText;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        timerText = GetComponent<Text>();
+        _timerText = GetComponent<Text>();
         StartCoroutine(Countdown());
     }
-    private IEnumerator Countdown() {
+    private IEnumerator Countdown()
+    {
         while (countDown > 0)
         {
             yield return new WaitForSeconds(1);
             countDown--;
-            timerText.text = countDown.ToString();
+            _timerText.text = countDown.ToString();
         }
-        GameManager.instance.updateState(GameState.GameStart);
+        GameManager.instance.UpdateState(EGameState.GameStart);
         // Raise Event
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

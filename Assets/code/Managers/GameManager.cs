@@ -1,69 +1,70 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
 
 namespace Game.Core
 {
     public class GameManager : MonoBehaviour
     {
         public static GameManager instance;
-        private GameObject[] labels;
 
-        private GameState currentState;
-        private PlayMode currentPlayMode;
+        private GameObject[] _labels;
 
-        public GameState CurrentState { get { return currentState; } }
-        public PlayMode CurrentPlayMode { 
-            get { return currentPlayMode; } 
-            set { currentPlayMode = value; }
-        }
+        public EGameState CurrentState { get; private set; }
+        public EPlayMode CurrentPlayMode { get; set; }
 
-        void Awake()
+        private void Awake()
         {
-            if (instance == null) 
+            if (instance == null)
             {
                 instance = this;
             }
-            currentPlayMode = PlayMode.Single;
+            CurrentPlayMode = EPlayMode.Single;
         }
 
-        void Start()
+        private void Start()
         {
-            updateState(GameState.GameTimer);
+            string currentScene = SceneManager.GetActiveScene().name;
+            if (currentScene != "Menu")
+            {
+                UpdateState(EGameState.GameTimer);
+            }
         }
 
-        public void updateState(GameState state)
+        public void UpdateState(EGameState state)
         {
-            if (currentState == GameState.GamePause && state == GameState.GameUnPause) 
+            if (CurrentState == EGameState.GamePause && state == EGameState.GameUnPause)
             {
                 UnPauseGame();
             }
 
-            currentState = state;
+            CurrentState = state;
 
             switch (state)
             {
-                case GameState.MainMenu:
+                case EGameState.MainMenu:
                     HandleMainMenuState();
                     break;
-                case GameState.GameTimer:
+                case EGameState.GameTimer:
                     HandleGameTimerState();
                     break;
-                case GameState.GameStart:
+                case EGameState.GameStart:
                     HandleGameStartState();
                     break;
-                case GameState.GameOver:
+                case EGameState.GameOver:
                     break;
-                case GameState.GamePause:
+                case EGameState.GamePause:
                     HandleGamePause();
                     break;
-                case GameState.GameUnPause:
+                case EGameState.GameUnPause:
                     HandleGameUnPause();
+                    break;
+                default:
                     break;
             }
         }
 
-        void HandleMainMenuState()
+        private void HandleMainMenuState()
         {
             string currentScene = SceneManager.GetActiveScene().name;
             if (currentScene != "Menu")
@@ -71,7 +72,7 @@ namespace Game.Core
                 SceneManager.LoadScene("Menu");
             }
         }
-        void HandleGameTimerState()
+        private void HandleGameTimerState()
         {
             string currentScene = SceneManager.GetActiveScene().name;
             Debug.Log("before load scene");
@@ -80,8 +81,8 @@ namespace Game.Core
                 Debug.Log("in load scene");
                 SceneManager.LoadScene("Main");
             }
-            labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
-            foreach (var label in labels)
+            _labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
+            foreach (var label in _labels)
             {
                 Debug.Log("label: " + label);
                 label.SetActive(false);
@@ -90,10 +91,10 @@ namespace Game.Core
             GameObject.FindGameObjectWithTag("Timer").SetActive(true);
         }
 
-        void HandleGameStartState()
+        private void HandleGameStartState()
         {
             // labels = GameObject.FindGameObjectsWithTag("ScoreLabel");
-            foreach (var label in labels)
+            foreach (var label in _labels)
             {
                 Debug.Log("label: " + label);
                 label.SetActive(true);
@@ -101,16 +102,16 @@ namespace Game.Core
             GameObject.FindGameObjectWithTag("Timer").SetActive(false);
             GameObject.FindGameObjectWithTag("GameStateObjects").GetComponent<BallSpawner>().enabled = true;
         }
-        void HandleGamePause()
+        private void HandleGamePause()
         {
-            PauseGame();            
+            PauseGame();
         }
-        void HandleGameUnPause()
+        private void HandleGameUnPause()
         {
-            UnPauseGame(); 
+            UnPauseGame();
         }
 
-        void PauseGame()
+        private void PauseGame()
         {
             GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
             if (pauseMenu == null)
@@ -122,7 +123,7 @@ namespace Game.Core
             Time.timeScale = 0;
         }
 
-        void UnPauseGame()
+        private void UnPauseGame()
         {
             GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
             if (pauseMenu == null)
@@ -135,9 +136,7 @@ namespace Game.Core
         }
     }
 
-    
-
-    public enum GameState
+    public enum EGameState
     {
         MainMenu,
         GameTimer,
@@ -147,7 +146,7 @@ namespace Game.Core
         GameUnPause
     }
 
-    public enum PlayMode
+    public enum EPlayMode
     {
         Single,
         TwoSameKeyboard,

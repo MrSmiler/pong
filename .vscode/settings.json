@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "pong.sln"
+    "dotnet.defaultSolution": "pong.sln",
+    "workbench.tree.indent": 25
 }

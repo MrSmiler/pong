@@ -8,14 +8,19 @@ public class Menu : MonoBehaviour
     public void SinglePlayerClicked()
     {
         // SceneManager.LoadScene("Main");
+        GameManager.instance.CurrentPlayMode = EPlayMode.Single;
         GameManager.instance.UpdateState(EGameState.GameTimer);
     }
     public void TwoPlayerKeyboardClicked()
     {
+        GameManager.instance.CurrentPlayMode = EPlayMode.TwoSameKeyboard;
+        GameManager.instance.UpdateState(EGameState.GameTimer);
     }
 
     public void TwoPlayerNetworkClicked()
     {
+        GameManager.instance.CurrentPlayMode = EPlayMode.TwoNetwork;
+        GameManager.instance.UpdateState(EGameState.GameTimer);
     }
 
     public void SettingsClicked()

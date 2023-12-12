@@ -18,4 +18,8 @@ namespace Game.Core
     public struct PongEnded : IGameEvent
     {
     }
+    public struct PlayModeChanged : IGameEvent
+    {
+        public EPlayMode playMode;
+    }
 }

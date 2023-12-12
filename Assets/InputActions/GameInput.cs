@@ -24,7 +24,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     ""name"": ""pong"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""TwoPlayerKeyboard"",
             ""id"": ""16417d26-0f95-4575-8ec9-e7b6deb2532d"",
             ""actions"": [
                 {
@@ -125,6 +125,76 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ccccfad2-da45-471c-96f5-29417e4f347e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PauseMenuOpenClose"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""SinglePlayer"",
+            ""id"": ""7180a85a-73a9-4642-b44b-383ceb2b4480"",
+            ""actions"": [
+                {
+                    ""name"": ""RightRacketMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""a92ff47d-8b96-4c26-b509-8c454219c4ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PauseMenuOpenClose"",
+                    ""type"": ""Button"",
+                    ""id"": ""a73f8c20-de04-4628-a21b-0cbe5aa49a0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""f9474667-8cc9-44ea-ba39-1f2bc0796ef6"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightRacketMove"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""864f1a9a-b767-46e4-8975-cfe51b21a0b8"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""RightRacketMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c8a45853-dec9-474a-be0b-10a9e7a48b7b"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""RightRacketMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d8c7eb3-d91f-40ab-babf-003a0e0ac408"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -715,11 +785,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_RightRacketMove = m_Player.FindAction("RightRacketMove", throwIfNotFound: true);
-        m_Player_LeftRacketMove = m_Player.FindAction("LeftRacketMove", throwIfNotFound: true);
-        m_Player_PauseMenuOpenClose = m_Player.FindAction("PauseMenuOpenClose", throwIfNotFound: true);
+        // TwoPlayerKeyboard
+        m_TwoPlayerKeyboard = asset.FindActionMap("TwoPlayerKeyboard", throwIfNotFound: true);
+        m_TwoPlayerKeyboard_RightRacketMove = m_TwoPlayerKeyboard.FindAction("RightRacketMove", throwIfNotFound: true);
+        m_TwoPlayerKeyboard_LeftRacketMove = m_TwoPlayerKeyboard.FindAction("LeftRacketMove", throwIfNotFound: true);
+        m_TwoPlayerKeyboard_PauseMenuOpenClose = m_TwoPlayerKeyboard.FindAction("PauseMenuOpenClose", throwIfNotFound: true);
+        // SinglePlayer
+        m_SinglePlayer = asset.FindActionMap("SinglePlayer", throwIfNotFound: true);
+        m_SinglePlayer_RightRacketMove = m_SinglePlayer.FindAction("RightRacketMove", throwIfNotFound: true);
+        m_SinglePlayer_PauseMenuOpenClose = m_SinglePlayer.FindAction("PauseMenuOpenClose", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -790,28 +864,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_RightRacketMove;
-    private readonly InputAction m_Player_LeftRacketMove;
-    private readonly InputAction m_Player_PauseMenuOpenClose;
-    public struct PlayerActions
+    // TwoPlayerKeyboard
+    private readonly InputActionMap m_TwoPlayerKeyboard;
+    private List<ITwoPlayerKeyboardActions> m_TwoPlayerKeyboardActionsCallbackInterfaces = new List<ITwoPlayerKeyboardActions>();
+    private readonly InputAction m_TwoPlayerKeyboard_RightRacketMove;
+    private readonly InputAction m_TwoPlayerKeyboard_LeftRacketMove;
+    private readonly InputAction m_TwoPlayerKeyboard_PauseMenuOpenClose;
+    public struct TwoPlayerKeyboardActions
     {
         private @GameInput m_Wrapper;
-        public PlayerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RightRacketMove => m_Wrapper.m_Player_RightRacketMove;
-        public InputAction @LeftRacketMove => m_Wrapper.m_Player_LeftRacketMove;
-        public InputAction @PauseMenuOpenClose => m_Wrapper.m_Player_PauseMenuOpenClose;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public TwoPlayerKeyboardActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RightRacketMove => m_Wrapper.m_TwoPlayerKeyboard_RightRacketMove;
+        public InputAction @LeftRacketMove => m_Wrapper.m_TwoPlayerKeyboard_LeftRacketMove;
+        public InputAction @PauseMenuOpenClose => m_Wrapper.m_TwoPlayerKeyboard_PauseMenuOpenClose;
+        public InputActionMap Get() { return m_Wrapper.m_TwoPlayerKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(TwoPlayerKeyboardActions set) { return set.Get(); }
+        public void AddCallbacks(ITwoPlayerKeyboardActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_TwoPlayerKeyboardActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TwoPlayerKeyboardActionsCallbackInterfaces.Add(instance);
             @RightRacketMove.started += instance.OnRightRacketMove;
             @RightRacketMove.performed += instance.OnRightRacketMove;
             @RightRacketMove.canceled += instance.OnRightRacketMove;
@@ -823,7 +897,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @PauseMenuOpenClose.canceled += instance.OnPauseMenuOpenClose;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(ITwoPlayerKeyboardActions instance)
         {
             @RightRacketMove.started -= instance.OnRightRacketMove;
             @RightRacketMove.performed -= instance.OnRightRacketMove;
@@ -836,21 +910,75 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @PauseMenuOpenClose.canceled -= instance.OnPauseMenuOpenClose;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(ITwoPlayerKeyboardActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_TwoPlayerKeyboardActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(ITwoPlayerKeyboardActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_TwoPlayerKeyboardActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_TwoPlayerKeyboardActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public TwoPlayerKeyboardActions @TwoPlayerKeyboard => new TwoPlayerKeyboardActions(this);
+
+    // SinglePlayer
+    private readonly InputActionMap m_SinglePlayer;
+    private List<ISinglePlayerActions> m_SinglePlayerActionsCallbackInterfaces = new List<ISinglePlayerActions>();
+    private readonly InputAction m_SinglePlayer_RightRacketMove;
+    private readonly InputAction m_SinglePlayer_PauseMenuOpenClose;
+    public struct SinglePlayerActions
+    {
+        private @GameInput m_Wrapper;
+        public SinglePlayerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RightRacketMove => m_Wrapper.m_SinglePlayer_RightRacketMove;
+        public InputAction @PauseMenuOpenClose => m_Wrapper.m_SinglePlayer_PauseMenuOpenClose;
+        public InputActionMap Get() { return m_Wrapper.m_SinglePlayer; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SinglePlayerActions set) { return set.Get(); }
+        public void AddCallbacks(ISinglePlayerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SinglePlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SinglePlayerActionsCallbackInterfaces.Add(instance);
+            @RightRacketMove.started += instance.OnRightRacketMove;
+            @RightRacketMove.performed += instance.OnRightRacketMove;
+            @RightRacketMove.canceled += instance.OnRightRacketMove;
+            @PauseMenuOpenClose.started += instance.OnPauseMenuOpenClose;
+            @PauseMenuOpenClose.performed += instance.OnPauseMenuOpenClose;
+            @PauseMenuOpenClose.canceled += instance.OnPauseMenuOpenClose;
+        }
+
+        private void UnregisterCallbacks(ISinglePlayerActions instance)
+        {
+            @RightRacketMove.started -= instance.OnRightRacketMove;
+            @RightRacketMove.performed -= instance.OnRightRacketMove;
+            @RightRacketMove.canceled -= instance.OnRightRacketMove;
+            @PauseMenuOpenClose.started -= instance.OnPauseMenuOpenClose;
+            @PauseMenuOpenClose.performed -= instance.OnPauseMenuOpenClose;
+            @PauseMenuOpenClose.canceled -= instance.OnPauseMenuOpenClose;
+        }
+
+        public void RemoveCallbacks(ISinglePlayerActions instance)
+        {
+            if (m_Wrapper.m_SinglePlayerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISinglePlayerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SinglePlayerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SinglePlayerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SinglePlayerActions @SinglePlayer => new SinglePlayerActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1014,10 +1142,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_XRSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface ITwoPlayerKeyboardActions
     {
         void OnRightRacketMove(InputAction.CallbackContext context);
         void OnLeftRacketMove(InputAction.CallbackContext context);
+        void OnPauseMenuOpenClose(InputAction.CallbackContext context);
+    }
+    public interface ISinglePlayerActions
+    {
+        void OnRightRacketMove(InputAction.CallbackContext context);
         void OnPauseMenuOpenClose(InputAction.CallbackContext context);
     }
     public interface IUIActions

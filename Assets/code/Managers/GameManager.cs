@@ -10,8 +10,19 @@ namespace Game.Core
 
         private GameObject[] _labels;
 
-        public EGameState CurrentState { get; private set; }
-        public EPlayMode CurrentPlayMode { get; set; }
+        public EGameState CurrentState { get; set; }
+
+        private EPlayMode _currentPlayMode;
+        public EPlayMode CurrentPlayMode
+        {
+            get => _currentPlayMode;
+            set
+            {
+                _currentPlayMode = value;
+                GameEventManager.GetGameEventBus().Raise(new PlayModeChanged { playMode = value });
+                Debug.LogWarning("play mode changed");
+            }
+        }
 
         private void Awake()
         {
@@ -19,7 +30,6 @@ namespace Game.Core
             {
                 instance = this;
             }
-            CurrentPlayMode = EPlayMode.Single;
         }
 
         private void Start()
